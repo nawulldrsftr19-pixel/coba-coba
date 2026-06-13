@@ -9,12 +9,13 @@ st.set_page_config(
 
 import streamlit as st
 
-# CSS hijau
+# CSS mode gelap hijau
 st.markdown("""
 <style>
-:root {
-  --bg-dark:  #004d40;   /* hijau tua (mode gelap) */
-  --text-dark:  #000000; /* teks terang */
+html, body, [data-testid="stApp"] {
+    background-color: #004d40 !important;  /* hijau tua gelap */
+    color: #f1f5f9 !important;             /* teks terang default */
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 /* kotak langkah */
