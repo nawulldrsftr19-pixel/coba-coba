@@ -820,7 +820,7 @@ elif st.session_state.tab == "📚 Materi":
                   <div class="rxn-eq">{rxn}</div></div>""", unsafe_allow_html=True)
 
 # BAGAN ALIR PEMISAHAN KATION
- st.subheader("📊 Bagan Pemisahan Kation")
+st.subheader("📊 Bagan Pemisahan Kation")
     if 'langkah' not in st.session_state: st.session_state.langkah = 0
     def buat_bagan(step):
         dot = graphviz.Digraph()
