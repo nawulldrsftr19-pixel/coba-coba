@@ -14,7 +14,7 @@ st.markdown("""
 <style>
 html, body, [data-testid="stApp"] {
     background-color: #004d40 !important;  /* hijau tua gelap */
-    color: #f1f5f9 !important;             /* teks terang default */
+    color: #000000 !important;             /* teks terang default */
     font-family: 'Space Grotesk', sans-serif;
 }
 
