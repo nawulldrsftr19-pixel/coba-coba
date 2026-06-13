@@ -34,7 +34,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-if mode == "Gelap":
+mode == "Gelap":
     st.markdown("""
     <style>
     html, body, [data-testid="stApp"] {
