@@ -2,7 +2,7 @@ import streamlit as st
 
 # ─── PAGE CONFIG ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="KimIA — Analisis Kation & Anion",
+    page_title="Glow ion — Analisis Kation & Anion",
     page_icon="⚗️",
     layout="wide",
 )
@@ -28,7 +28,7 @@ st.markdown("""
 }
 
 html, body, [data-testid="stApp"] {
-  background-color: #0d1117 !important;
+  background-color: #ffffff !important;
   color: #f1f5f9 !important;
   font-family: 'Space Grotesk', sans-serif;
 }
