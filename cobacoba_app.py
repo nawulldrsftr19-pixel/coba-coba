@@ -16,7 +16,7 @@ st.markdown("""
   --bg-light: #e8f5e9;   /* hijau muda (mode terang) */
   --bg-dark:  #004d40;   /* hijau tua (mode gelap) */
   --text-light: #1b1b1b; /* teks gelap */
-  --text-dark:  #f1f5f9; /* teks terang */
+  --text-dark:  #000000; /* teks terang */
 }
 
 /* default: terang */
