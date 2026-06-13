@@ -633,7 +633,7 @@ if st.session_state.tab == "🏠 Panduan":
         </div>
         """, unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
-    with a3:
+    
         st.markdown("""
         <div class="card card-gradient">
           <h3>👥 Tentang Kami</h3>
