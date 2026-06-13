@@ -80,12 +80,6 @@ st.markdown("""
   --muted:   #94a3b8;
 }
 
-html, body, [data-testid="stApp"] {
-  background-color: #0d1117 !important;
-  color: #f1f5f9 !important;
-  font-family: 'Space Grotesk', sans-serif;
-}
-
 [data-testid="stSidebar"] { display: none; }
 [data-testid="stHeader"]  { display: none; }
 #MainMenu, footer         { display: none; }
