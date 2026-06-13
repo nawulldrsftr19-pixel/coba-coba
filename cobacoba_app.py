@@ -1108,7 +1108,4 @@ elif st.session_state.tab == "🎯 Kuis":
                         st.session_state.quiz_done = True
                     st.rerun()
 
-                if skor >= 80:
-                    st.balloons()
-                    st.write("🎉 Sangat Baik! Pemahaman Anda sudah sangat baik.")
-        
+               
