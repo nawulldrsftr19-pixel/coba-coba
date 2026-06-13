@@ -635,19 +635,19 @@ if st.session_state.tab == "🏠 Panduan":
     st.markdown("</div>", unsafe_allow_html=True)
     
 # Tambahkan Tentang Kami di bagian Panduan
-st.markdown("""
-<div class="card card-gradient" style="color:#ffffff;">
-  <h3>👥 Tentang Kami</h3>
-  <p><strong>Kelompok 6 — Kelas 1C</strong></p>
-  <ul style="list-style-type:none; padding-left:0; line-height:1.8;">
-    <li>1. Arindi Mei Intani &nbsp;&nbsp;(2560580)</li>
-    <li>2. Habil Nurrahman &nbsp;&nbsp;(2560637)</li>
-    <li>3. Muhammad Ichsan Nugraha &nbsp;&nbsp;(2560682)</li>
-    <li>4. Nawulan Dari Safitri &nbsp;&nbsp;(2560717)</li>
-    <li>5. Siti Rahma Aulia &nbsp;&nbsp;(2560787)</li>
-  </ul>
-</div>
-""", unsafe_allow_html=True)
+    st.markdown("""
+    <div class="card card-gradient" style="color:#ffffff;">
+      <h3>👥 Tentang Kami</h3>
+      <p><strong>Kelompok 6 — Kelas 1C</strong></p>
+      <ul style="list-style-type:none; padding-left:0; line-height:1.8;">
+        <li>1. Arindi Mei Intani &nbsp;&nbsp;(2560580)</li>
+        <li>2. Habil Nurrahman &nbsp;&nbsp;(2560637)</li>
+        <li>3. Muhammad Ichsan Nugraha &nbsp;&nbsp;(2560682)</li>
+        <li>4. Nawulan Dari Safitri &nbsp;&nbsp;(2560717)</li>
+        <li>5. Siti Rahma Aulia &nbsp;&nbsp;(2560787)</li>
+      </ul>
+    </div>
+    """, unsafe_allow_html=True)
  
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB: MATERI
