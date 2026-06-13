@@ -13,18 +13,9 @@ import streamlit as st
 st.markdown("""
 <style>
 :root {
-  --bg-light: #e8f5e9;   /* hijau muda (mode terang) */
   --bg-dark:  #004d40;   /* hijau tua (mode gelap) */
   --text-light:  #000000; /* teks gelap */
   --text-dark:  #000000; /* teks terang */
-}
-
-/* default: terang */
-html, body, [data-testid="stApp"] {
-  background-color: var(--bg-light) !important;
-  color: var(--text-light) !important;
-  font-family: 'Space Grotesk', sans-serif;
-  transition: background-color 0.6s ease, color 0.6s ease; /* transisi halus */
 }
 
 /* kotak langkah */
@@ -42,9 +33,6 @@ html, body, [data-testid="stApp"] {
 }
 </style>
 """, unsafe_allow_html=True)
-
-# Toggle mode gelap/terang
-mode = st.radio("Pilih tema:", ["Terang", "Gelap"], horizontal=True)
 
 if mode == "Gelap":
     st.markdown("""
