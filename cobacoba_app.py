@@ -103,6 +103,8 @@ html, body, [data-testid="stApp"] {
   margin-bottom: 1rem;
 }
 
+import streamlit as st
+
 # CSS untuk kotak langkah + versi responsif
 st.markdown("""
 <style>
