@@ -33,19 +33,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# CSS mode gelap
-    st.markdown("""
-    <style>
-    html, body, [data-testid="stApp"] {
-      background-color: var(--bg-dark) !important;
-      color: var(--text-dark) !important;
-    }
-    .step-box {
-      background: #1b5e20; /* hijau gelap untuk kotak */
-      color:#a5d6a7;
-    }
-    </style>
-    """, unsafe_allow_html=True)
 
 # ─── CUSTOM CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
