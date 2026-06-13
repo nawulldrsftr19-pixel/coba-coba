@@ -136,7 +136,7 @@ html, body, [data-testid="stApp"] {
 
 /* ── STEP CARDS ── */
 .step-card {
-  background:#001f3f; border:1px solid #2d3748;
+  background:#161b22; border:1px solid #2d3748;
   border-radius:14px; padding:1.25rem;
   position:relative; overflow:hidden;
 }
