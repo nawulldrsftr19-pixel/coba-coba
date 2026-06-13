@@ -15,7 +15,7 @@ st.markdown("""
 :root {
   --bg-light: #e8f5e9;   /* hijau muda (mode terang) */
   --bg-dark:  #004d40;   /* hijau tua (mode gelap) */
-  --text-light: #1b1b1b; /* teks gelap */
+  --text-light:  #000000; /* teks gelap */
   --text-dark:  #000000; /* teks terang */
 }
 
@@ -206,7 +206,7 @@ st.markdown("""
 /* ── INFO PILL ── */
 .info-pill {
   display:inline-block; background:rgba(124,58,237,.15);
-  border:1px solid rgba(124,58,237,.3); color:#000000;
+  border:1px solid rgba(124,58,237,.3); color:#f1f5f9;
   border-radius:999px; padding:.4rem 1.2rem; font-size:.85rem;
 }
 
