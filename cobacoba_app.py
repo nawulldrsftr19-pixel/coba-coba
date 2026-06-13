@@ -29,7 +29,7 @@ st.markdown("""
 
 html, body, [data-testid="stApp"] {
   background-color: #ffffff !important;
-  color: #f1f5f9 !important;
+  color: #0d1117 !important;
   font-family: 'Space Grotesk', sans-serif;
 }
 
