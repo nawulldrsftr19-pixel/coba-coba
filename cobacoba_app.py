@@ -157,8 +157,7 @@ st.markdown("""
     <div class="step-box">
     06 🔁 <strong>Ulang & Kuasai</strong><br>
     Navigasi bebas antar tab kapan saja. Kuis bisa diulang untuk meningkatkan skor. Selamat belajar!
-    </div>
-""", unsafe_allow_html=True)
+    </div>""", unsafe_allow_html=True)
 
 
 
