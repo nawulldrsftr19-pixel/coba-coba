@@ -38,7 +38,7 @@ html, body, [data-testid="stApp"] {
   transition: background 0.6s ease, color 0.6s ease;
 }
 .step-box strong {
-  color: #ffeb3b; /* aksen kuning */
+  color: #000000; /* aksen kuning */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -206,7 +206,7 @@ st.markdown("""
 /* ── INFO PILL ── */
 .info-pill {
   display:inline-block; background:rgba(124,58,237,.15);
-  border:1px solid rgba(124,58,237,.3); color:#c4b5fd;
+  border:1px solid rgba(124,58,237,.3); color:#000000;
   border-radius:999px; padding:.4rem 1.2rem; font-size:.85rem;
 }
 
