@@ -543,7 +543,7 @@ if st.session_state.tab == "🏠 Panduan":
     st.markdown("""
     <div class="card card-gradient" style="text-align:center;padding:2rem;">
       <div style="font-size:3rem;margin-bottom:1rem;">⚗️</div>
-      <div class="grad-h2" style="font-size:2rem;">Selamat Datang di KimIA</div>
+      <div class="grad-h2" style="font-size:2rem;">Selamat Datang di Glow ion</div>
       <p class="muted-p" style="max-width:560px;margin:0 auto 1rem;">
         Platform interaktif untuk mempelajari analisis kualitatif
         <strong style="color:#67e8f9">Kation</strong> (Golongan I–V) dan
