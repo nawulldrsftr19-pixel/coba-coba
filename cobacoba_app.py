@@ -637,6 +637,78 @@ if st.session_state.tab == "🏠 Panduan":
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB: MATERI
 # ══════════════════════════════════════════════════════════════════════════════
+# ─── BAGAN ALIR PEMISAHAN KATION ───────────────────────────────
+st.subheader("📊 Bagan Pemisahan Kation")
+
+# inisialisasi langkah
+if "langkah" not in st.session_state:
+    st.session_state.langkah = 0
+
+# fungsi untuk membuat bagan
+def buat_bagan(step):
+    dot = graphviz.Digraph()
+    dot.attr(rankdir="TB")
+    dot.node("start", "Campuran Gol I–V", style="filled", color="lavender")
+
+    # Golongan I
+    if step >= 1:
+        dot.node("hcl", "+ HCl encer", style="filled", color="lightgreen"); dot.edge("start", "hcl")
+        dot.node("gol1", "Endapan Gol I", style="filled", color="skyblue")
+        dot.node("larutan", "Filtrat (Al,Fe,Ba,Sr,Ca)", style="filled", color="lightyellow")
+        dot.edge("hcl", "gol1"); dot.edge("hcl", "larutan")
+
+    # Golongan II
+    if step >= 2:
+        dot.node("h2o", "+ H2O Panas", style="filled", color="lightpink"); dot.edge("gol1", "h2o")
+        dot.node("pb", "Pb²⁺ Larutan", style="filled", color="gold")
+        dot.node("residu", "Endapan AgCl & Hg₂Cl₂", style="filled", color="lightgray")
+        dot.edge("h2o", "pb"); dot.edge("h2o", "residu")
+        dot.node("nh4oh", "+ NH₄OH Berlebih", style="filled", color="lightgreen"); dot.edge("larutan", "nh4oh")
+        dot.node("gol3", "Endapan (Al, Fe)", style="filled", color="salmon")
+        dot.node("gol4", "Filtrat (Ba, Sr, Ca)", style="filled", color="khaki")
+        dot.edge("nh4oh", "gol3"); dot.edge("nh4oh", "gol4")
+
+    # Golongan III & IV
+    if step >= 3:
+        dot.edge("pb", "PbCrO₄ (Kuning)", label="+ K₂CrO₄")
+        dot.edge("gol3", "Fe(OH)₃ / Al(OH)₄⁻", label="+ NaOH Berlebih")
+        dot.edge("gol4", "BaCrO₄ (Kuning)", label="+ K₂CrO₄")
+        dot.node("gol5", "Filtrat (NH₄⁺, Na⁺, K⁺, Mg²⁺)", style="filled", color="lightcyan")
+        dot.edge("gol4", "gol5")
+
+    # Golongan V
+    if step >= 4:
+        dot.edge("gol5", "NH₄⁺ → Gas NH₃", label="+ NaOH Panas")
+        dot.edge("gol5", "Na⁺ → Nyala Kuning", label="Uji Nyala")
+        dot.edge("gol5", "K⁺ → Endapan K₂Na[Co(NO₂)₆]", label="+ Na₃[Co(NO₂)₆]")
+        dot.edge("gol5", "Mg²⁺ → Endapan MgNH₄PO₄", label="+ Na₂HPO₄ + NH₃")
+
+    return dot
+
+# tampilkan bagan sesuai langkah
+st.graphviz_chart(buat_bagan(st.session_state.langkah))
+
+# tombol navigasi
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("➡️ Langkah Berikutnya"):
+        if st.session_state.langkah < 5:
+            st.session_state.langkah += 1
+            st.rerun()
+with col2:
+    if st.button("🔄 Reset Bagan"):
+        st.session_state.langkah = 0
+        st.rerun()
+
+# legend warna
+st.markdown("""
+### 🟩 Legend Warna Golongan
+- 🟦 **Golongan I** → Endapan biru muda  
+- 🟨 **Golongan II** → Pb²⁺ kuning emas, residu abu‑abu  
+- 🟥 **Golongan III** → Endapan Al/Fe berwarna salmon  
+- 🟫 **Golongan IV** → Ba, Sr, Ca berwarna khaki  
+- 🟦 **Golongan V** → Filtrat NH₄⁺, Na⁺, K⁺, Mg²⁺ berwarna cyan muda  
+
 elif st.session_state.tab == "📚 Materi":
     st.markdown('<div class="grad-h2">Materi Kation &amp; Anion</div>', unsafe_allow_html=True)
 
@@ -819,78 +891,6 @@ elif st.session_state.tab == "📚 Materi":
                   <p class="muted-p"><strong>Uji spesifik:</strong> {uji}</p>
                   <div class="rxn-eq">{rxn}</div></div>""", unsafe_allow_html=True)
 
-# ─── BAGAN ALIR PEMISAHAN KATION ───────────────────────────────
-st.subheader("📊 Bagan Pemisahan Kation")
-
-# inisialisasi langkah
-if "langkah" not in st.session_state:
-    st.session_state.langkah = 0
-
-# fungsi untuk membuat bagan
-def buat_bagan(step):
-    dot = graphviz.Digraph()
-    dot.attr(rankdir="TB")
-    dot.node("start", "Campuran Gol I–V", style="filled", color="lavender")
-
-    # Golongan I
-    if step >= 1:
-        dot.node("hcl", "+ HCl encer", style="filled", color="lightgreen"); dot.edge("start", "hcl")
-        dot.node("gol1", "Endapan Gol I", style="filled", color="skyblue")
-        dot.node("larutan", "Filtrat (Al,Fe,Ba,Sr,Ca)", style="filled", color="lightyellow")
-        dot.edge("hcl", "gol1"); dot.edge("hcl", "larutan")
-
-    # Golongan II
-    if step >= 2:
-        dot.node("h2o", "+ H2O Panas", style="filled", color="lightpink"); dot.edge("gol1", "h2o")
-        dot.node("pb", "Pb²⁺ Larutan", style="filled", color="gold")
-        dot.node("residu", "Endapan AgCl & Hg₂Cl₂", style="filled", color="lightgray")
-        dot.edge("h2o", "pb"); dot.edge("h2o", "residu")
-        dot.node("nh4oh", "+ NH₄OH Berlebih", style="filled", color="lightgreen"); dot.edge("larutan", "nh4oh")
-        dot.node("gol3", "Endapan (Al, Fe)", style="filled", color="salmon")
-        dot.node("gol4", "Filtrat (Ba, Sr, Ca)", style="filled", color="khaki")
-        dot.edge("nh4oh", "gol3"); dot.edge("nh4oh", "gol4")
-
-    # Golongan III & IV
-    if step >= 3:
-        dot.edge("pb", "PbCrO₄ (Kuning)", label="+ K₂CrO₄")
-        dot.edge("gol3", "Fe(OH)₃ / Al(OH)₄⁻", label="+ NaOH Berlebih")
-        dot.edge("gol4", "BaCrO₄ (Kuning)", label="+ K₂CrO₄")
-        dot.node("gol5", "Filtrat (NH₄⁺, Na⁺, K⁺, Mg²⁺)", style="filled", color="lightcyan")
-        dot.edge("gol4", "gol5")
-
-    # Golongan V
-    if step >= 4:
-        dot.edge("gol5", "NH₄⁺ → Gas NH₃", label="+ NaOH Panas")
-        dot.edge("gol5", "Na⁺ → Nyala Kuning", label="Uji Nyala")
-        dot.edge("gol5", "K⁺ → Endapan K₂Na[Co(NO₂)₆]", label="+ Na₃[Co(NO₂)₆]")
-        dot.edge("gol5", "Mg²⁺ → Endapan MgNH₄PO₄", label="+ Na₂HPO₄ + NH₃")
-
-    return dot
-
-# tampilkan bagan sesuai langkah
-st.graphviz_chart(buat_bagan(st.session_state.langkah))
-
-# tombol navigasi
-col1, col2 = st.columns(2)
-with col1:
-    if st.button("➡️ Langkah Berikutnya"):
-        if st.session_state.langkah < 5:
-            st.session_state.langkah += 1
-            st.rerun()
-with col2:
-    if st.button("🔄 Reset Bagan"):
-        st.session_state.langkah = 0
-        st.rerun()
-
-# legend warna
-st.markdown("""
-### 🟩 Legend Warna Golongan
-- 🟦 **Golongan I** → Endapan biru muda  
-- 🟨 **Golongan II** → Pb²⁺ kuning emas, residu abu‑abu  
-- 🟥 **Golongan III** → Endapan Al/Fe berwarna salmon  
-- 🟫 **Golongan IV** → Ba, Sr, Ca berwarna khaki  
-- 🟦 **Golongan V** → Filtrat NH₄⁺, Na⁺, K⁺, Mg²⁺ berwarna cyan muda  
-""")
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB: PENGUJIAN
