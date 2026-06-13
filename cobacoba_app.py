@@ -1,193 +1,373 @@
 import streamlit as st
-import pandas as pd
+from data.kation_data import GOLONGAN_DATA
+from data.anion_data import ANION_DATA
+from data.quiz_data import QUIZ_DATA
+from tabs import panduan, materi, pengujian, reaksi_kation, reaksi_anion, kuis
 
-# --- KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="KimIA — Analisis Kation & Anion", layout="wide")
+# ─── PAGE CONFIG ───────────────────────────────────────────
+st.set_page_config(
+    page_title="KimIA — Analisis Kation & Anion",
+    page_icon="⚗️",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
 
-# --- CSS CUSTOM UNTUK MENYAMAKAN TAMPILAN ---
+# ─── CUSTOM CSS ────────────────────────────────────────────
 st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-    
-    html, body, [class*="css"] {
-        font-family: 'Space Grotesk', sans-serif;
-    }
-    
-    .main {
-        background-color: #0d1117;
-        color: #f1f5f9;
-    }
-    
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-    }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-    .stTabs [data-baseweb="tab"] {
-        height: 50px;
-        white-space: pre-wrap;
-        background-color: #161b22;
-        border-radius: 10px 10px 0px 0px;
-        color: #94a3b8;
-        padding: 10px;
-    }
+html, body, [class*="css"] {
+    font-family: 'Space Grotesk', sans-serif;
+}
 
-    .stTabs [aria-selected="true"] {
-        background-color: #7c3aed !important;
-        color: white !important;
-    }
+/* Hide default streamlit elements */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
 
-    .gol-badge {
-        display: inline-block;
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-weight: 600;
-        margin-bottom: 10px;
-        border: 1px solid rgba(255,255,255,0.2);
-    }
-    
-    .rxn-eq {
-        font-family: 'Courier New', monospace;
-        padding: 10px;
-        background: rgba(6, 182, 212, 0.1);
-        border-left: 5px solid #06b6d4;
-        border-radius: 5px;
-        margin: 10px 0;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+/* Main background */
+.stApp {
+    background: linear-gradient(135deg, #0d1117 0%, #0d1117 100%);
+}
 
-# --- HEADER ---
-st.title("⚗️ KimIA — Analisis Kation & Anion")
-st.write("Panduan lengkap analisis kualitatif ion dalam larutan [1, 2]")
+/* App header banner */
+.app-header {
+    background: linear-gradient(135deg, #1a0533 0%, #0d1117 50%, #001a2e 100%);
+    border: 1px solid #2d3748;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+.app-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,.3) 0%, transparent 70%);
+    pointer-events: none;
+}
+.app-title {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #67e8f9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0.5rem 0;
+}
+.app-subtitle {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+.app-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #7c3aed, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
 
-# --- NAVIGASI TAB ---
-tab_titles = ["🏠 Panduan", "📚 Materi", "🧪 Pengujian", "⚗️ Reaksi", "🎯 Kuis"]
-tabs = st.tabs(tab_titles)
+/* Tab styling */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 0.5rem;
+    background: #161b22;
+    border-radius: 14px;
+    padding: 0.5rem;
+    border: 1px solid #2d3748;
+}
+.stTabs [data-baseweb="tab"] {
+    height: auto;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border-radius: 10px;
+    color: #94a3b8;
+    font-weight: 500;
+    font-size: 0.88rem;
+    border: none;
+    transition: all 0.2s;
+}
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, #7c3aed, #06b6d4) !important;
+    color: white !important;
+}
+.stTabs [data-baseweb="tab-panel"] {
+    padding-top: 1.5rem;
+}
 
-# --- TAB 1: PANDUAN ---
-with tabs:
-    st.header("Selamat Datang di KimIA")
-    st.info("Platform interaktif untuk mempelajari analisis kualitatif Kation (Golongan I–V) dan Anion secara lengkap. [3]")
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("Cara Menggunakan Aplikasi")
-        st.markdown("""
-        1. **Pelajari Materi**: Buka tab Materi untuk teori lengkap.
-        2. **Ikuti Pengujian**: Lihat prosedur sistematis di tab Pengujian.
-        3. **Lihat Reaksi**: Visualisasikan persamaan reaksi di tab Reaksi.
-        4. **Uji Pemahaman**: Kerjakan kuis untuk mengevaluasi diri. [4-6]
-        """)
-    with col2:
-        st.subheader("Cakupan Materi")
-        st.markdown("""
-        - **Kation Gol I - V**: Dari Ag⁺ hingga NH₄⁺.
-        - **Anion**: Cl⁻, SO₄²⁻, CO₃²⁻, NO₃⁻, PO₄³⁻, I⁻, S²⁻. [7, 8]
-        """)
+/* Cards */
+.info-card {
+    background: #161b22;
+    border: 1px solid #2d3748;
+    border-radius: 16px;
+    padding: 1.4rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.info-card:hover {
+    transform: translateY(-2px);
+    border-color: #7c3aed;
+}
+.gradient-card {
+    background: linear-gradient(135deg, #161b22 0%, rgba(124,58,237,0.08) 100%);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+.highlight-card {
+    background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(6,182,212,0.08));
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+}
 
-# --- TAB 2: MATERI ---
-with tabs[1]:
-    st.header("Materi Kation & Anion")
-    materi_choice = st.selectbox("Pilih Golongan:", ["Golongan I", "Golongan II", "Golongan III", "Golongan IV", "Golongan V", "Anion"])
-    
-    if materi_choice == "Golongan I":
-        st.markdown("<div class='gol-badge' style='background:#7c3aed'>Golongan I — Klorida Tidak Larut</div>", unsafe_allow_html=True)
-        st.write("**Prinsip:** Diendapkan dengan HCl encer (2M). [9, 10]")
-        st.markdown("- **Ag⁺**: Endapan putih AgCl, larut dalam NH₄OH berlebih. [10]")
-        st.markdown("- **Hg₂²⁺**: Endapan putih Hg₂Cl₂, berubah hitam dengan amonia. [11]")
-        st.markdown("- **Pb²⁺**: Endapan putih PbCl₂, larut dalam air panas. [12]")
-        
-    elif materi_choice == "Golongan II":
-        st.markdown("<div class='gol-badge' style='background:#06b6d4'>Golongan II — Sulfida dalam Suasana Asam</div>", unsafe_allow_html=True)
-        st.write("**Prinsip:** Diendapkan sebagai sulfida dengan H₂S dalam HCl 0.3M. [13]")
-        st.write("**Ion:** Cu²⁺ (hitam), Bi³⁺ (hitam), Cd²⁺ (kuning), Sn²⁺ (coklat). [14-16]")
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: monospace;
+    margin-bottom: 0.75rem;
+}
+.badge-gol1 { background: rgba(124,58,237,.2); color: #c4b5fd; border: 1px solid rgba(124,58,237,.4); }
+.badge-gol2 { background: rgba(6,182,212,.2); color: #67e8f9; border: 1px solid rgba(6,182,212,.4); }
+.badge-gol3 { background: rgba(245,158,11,.2); color: #fcd34d; border: 1px solid rgba(245,158,11,.4); }
+.badge-gol4 { background: rgba(16,185,129,.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,.4); }
+.badge-gol5 { background: rgba(239,68,68,.2); color: #fca5a5; border: 1px solid rgba(239,68,68,.4); }
+.badge-anion { background: rgba(236,72,153,.2); color: #f9a8d4; border: 1px solid rgba(236,72,153,.4); }
 
-    elif materi_choice == "Golongan III":
-        st.markdown("<div class='gol-badge' style='background:#f59e0b'>Golongan III — Sulfida/Hidroksida Basa</div>", unsafe_allow_html=True)
-        st.write("**Prinsip:** Menggunakan (NH₄)₂S dalam buffer NH₄OH/NH₄Cl. [17]")
-        st.write("**Ion:** Fe³⁺ (coklat merah), Al³⁺ (putih gelatin), Cr³⁺ (hijau abu), Ni²⁺ (merah w/ DMG). [18-20]")
+/* Reaction equation box */
+.rxn-box {
+    background: rgba(6,182,212,0.08);
+    border: 1px solid rgba(6,182,212,0.25);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #67e8f9;
+    margin-top: 0.5rem;
+    word-break: break-all;
+}
 
-    elif materi_choice == "Golongan IV":
-        st.markdown("<div class='gol-badge' style='background:#10b981'>Golongan IV — Karbonat Basa</div>", unsafe_allow_html=True)
-        st.write("**Prinsip:** Diendapkan dengan (NH₄)₂CO₃. [21]")
-        st.write("**Ion:** Ba²⁺, Sr²⁺, Ca²⁺ (semua endapan karbonat putih). [22, 23]")
+/* Tube animation container */
+.tube-rack {
+    background: rgba(0,0,0,0.3);
+    border-radius: 0 0 14px 14px;
+    padding: 1.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    align-items: flex-end;
+    min-height: 160px;
+}
 
-    elif materi_choice == "Golongan V":
-        st.markdown("<div class='gol-badge' style='background:#ef4444'>Golongan V — Tidak Terendapkan</div>", unsafe_allow_html=True)
-        st.write("**Prinsip:** Identifikasi melalui uji spesifik (misal: Uji Nyala). [24]")
-        st.write("**Ion:** Mg²⁺, K⁺ (nyala violet), Na⁺ (nyala kuning), NH₄⁺ (bau amonia). [25-27]")
+/* Step cards for panduan */
+.step-card {
+    background: #161b22;
+    border: 1px solid #2d3748;
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+.step-num {
+    font-family: monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(124,58,237,0.3);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
 
-    elif materi_choice == "Anion":
-        st.markdown("<div class='gol-badge' style='background:#ec4899'>Anion — Ion Bermuatan Negatif</div>", unsafe_allow_html=True)
-        st.write("**Uji Spesifik:** [28-31]")
-        st.markdown("- **Cl⁻**: +AgNO₃ → Putih.")
-        st.markdown("- **SO₄²⁻**: +BaCl₂ → Putih (tahan asam).")
-        st.markdown("- **NO₃⁻**: Uji Cincin Coklat.")
+/* Quiz styling */
+.quiz-option {
+    background: #161b22;
+    border: 1.5px solid #2d3748;
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    color: #f1f5f9;
+}
+.quiz-correct {
+    border-color: #10b981 !important;
+    background: rgba(16,185,129,0.12) !important;
+    color: #6ee7b7 !important;
+}
+.quiz-wrong {
+    border-color: #ef4444 !important;
+    background: rgba(239,68,68,0.12) !important;
+    color: #fca5a5 !important;
+}
+.explanation-box {
+    background: rgba(6,182,212,0.08);
+    border: 1px solid rgba(6,182,212,0.2);
+    border-radius: 10px;
+    padding: 1rem;
+    color: #67e8f9;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+}
 
-# --- TAB 3: PENGUJIAN ---
-with tabs[32]:
-    st.header("Tabel Prosedur Pengujian")
-    gol_test = st.radio("Pilih Golongan Kation untuk Detail Prosedur:", ["Gol I", "Gol II", "Gol III", "Gol IV", "Gol V"], horizontal=True)
-    
-    if gol_test == "Gol I":
-        data = {
-            "Uji": ["Golongan", "Pemisahan Pb²⁺", "Uji Ag⁺ spesifik"],
-            "Reagen": ["HCl 2M", "Air Panas", "HNO₃ + K₂CrO₄"],
-            "Hasil": ["Endapan Putih", "Pb²⁺ Larut", "AgCrO₄ Merah Bata"],
-            "Kesimpulan": ["Ada Gol I", "Identifikasi Pb", "Confirm Ag⁺"]
-        }
-        st.table(pd.DataFrame(data)) # Berdasarkan data di [33-35]
+/* Metric overrides */
+[data-testid="metric-container"] {
+    background: #161b22;
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    padding: 1rem;
+}
 
-# --- TAB 4: REAKSI ---
-with tabs[36]:
-    st.header("Persamaan Reaksi Kimia")
-    st.write("Berikut adalah beberapa reaksi konfirmasi penting:")
-    
-    reaksi_data = [
-        {"judul": "Konfirmasi Ag⁺", "eq": "Ag⁺ + Cl⁻ → AgCl↓ (putih) [37]"},
-        {"judul": "Konfirmasi Pb²⁺", "eq": "Pb²⁺ + CrO₄²⁻ → PbCrO₄↓ (kuning) [38]"},
-        {"judul": "Konfirmasi Fe³⁺", "eq": "Fe³⁺ + 3SCN⁻ → [Fe(SCN)₃] (merah darah) [39]"},
-        {"judul": "Konfirmasi Ni²⁺", "eq": "Ni²⁺ + 2DMG → Ni(HDMG)₂↓ (merah) [40]"},
-        {"judul": "Konfirmasi NH₄⁺", "eq": "NH₄⁺ + OH⁻ → NH₃↑ + H₂O (gas bau tajam) [41]"}
-    ]
-    
-    for rx in reaksi_data:
-        with st.expander(rx["judul"]):
-            st.markdown(f"<div class='rxn-eq'>{rx['eq']}</div>", unsafe_allow_html=True)
+/* Dataframe / table */
+.stDataFrame {
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    overflow: hidden;
+}
 
-# --- TAB 5: KUIS ---
-with tabs[42]:
-    st.header("Kuis Kation & Anion")
-    
-    # Inisialisasi state kuis
-    if 'score' not in st.session_state:
-        st.session_state.score = 0
-    if 'answered' not in st.session_state:
-        st.session_state.answered = False
+/* Button overrides */
+.stButton > button {
+    background: linear-gradient(135deg, #7c3aed, #06b6d4);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    transition: all 0.2s;
+}
+.stButton > button:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
 
-    # Contoh Soal (diambil dari sumber [43-45])
-    st.subheader("Pertanyaan:")
-    q1 = st.radio("1. Reagen apa yang digunakan untuk mengendapkan kation Golongan I?", 
-                  ["H₂SO₄ encer", "HCl encer", "NaOH", "(NH₄)₂S"], index=None)
-    
-    if q1:
-        if q1 == "HCl encer":
-            st.success("Benar! Kation Golongan I diendapkan sebagai klorida tidak larut. [43]")
-        else:
-            st.error("Salah. Jawaban yang benar adalah HCl encer. [43]")
+/* Selectbox */
+.stSelectbox > div > div {
+    background: #161b22;
+    border-color: #2d3748;
+    color: #f1f5f9;
+}
 
-    q2 = st.radio("2. Warna larutan Cu²⁺ dalam NH₄OH berlebih adalah?", 
-                  ["Merah", "Hijau", "Kuning", "Biru tua"], index=None)
-    
-    if q2:
-        if q2 == "Biru tua":
-            st.success("Benar! Terbentuk kompleks tetraaminatembaga(II) biru tua. [45]")
-        else:
-            st.error("Salah. Tembaga membentuk larutan biru tua dengan amonia berlebih. [45]")
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background: #161b22;
+    border-right: 1px solid #2d3748;
+}
 
-    if st.button("Reset Kuis"):
-        st.rerun()
+/* Section headers */
+.section-h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #7c3aed, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
 
-# --- FOOTER ---
-st.divider()
-st.caption("Aplikasi ini bersifat edukatif. Selalu ikuti prosedur keselamatan laboratorium. [46]")
+/* Ion chip */
+.ion-chip {
+    display: inline-block;
+    background: #1f2937;
+    border: 1px solid #2d3748;
+    border-radius: 8px;
+    padding: 0.25rem 0.75rem;
+    font-family: monospace;
+    font-size: 0.82rem;
+    color: #f1f5f9;
+    margin: 0.2rem;
+}
+
+/* Divider */
+.custom-divider {
+    border: none;
+    border-top: 1px solid #2d3748;
+    margin: 1.5rem 0;
+}
+
+/* Color swatch inline */
+.swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Progress bar custom */
+.prog-wrap {
+    background: #1f2937;
+    border-radius: 999px;
+    height: 8px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+.prog-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7c3aed, #06b6d4);
+    transition: width 0.4s ease;
+}
+
+/* Score ring */
+.score-container {
+    text-align: center;
+    padding: 2rem;
+    background: #161b22;
+    border: 1px solid #2d3748;
+    border-radius: 20px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ─── APP HEADER ────────────────────────────────────────────
+st.markdown("""
+<div class="app-header">
+    <div class="app-badge">⚗️ Aplikasi Kimia Analitik</div>
+    <div class="app-title">Kation &amp; Anion</div>
+    <div class="app-subtitle">Panduan lengkap analisis kualitatif ion dalam larutan</div>
+</div>
+""", unsafe_allow_html=True)
+
+# ─── MAIN TABS ─────────────────────────────────────────────
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    "🏠  Panduan",
+    "📚  Materi",
+    "🧪  Pengujian",
+    "⚗️  Reaksi Kation",
+    "🔬  Reaksi Anion",
+    "🎯  Kuis",
+])
+
+with tab1:
+    panduan.render()
+
+with tab2:
+    materi.render(GOLONGAN_DATA, ANION_DATA)
+
+with tab3:
+    pengujian.render()
+
+with tab4:
+    reaksi_kation.render(GOLONGAN_DATA)
+
+with tab5:
+    reaksi_anion.render(ANION_DATA)
+
+with tab6:
+    kuis.render(QUIZ_DATA)
