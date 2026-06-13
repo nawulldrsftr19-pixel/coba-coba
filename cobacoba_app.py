@@ -105,60 +105,25 @@ html, body, [data-testid="stApp"] {
 
 # CSS untuk kotak langkah
 st.markdown("""
-<style>
-.step-box {
-    background: linear-gradient(135deg, #001f3f 0%, #3b82f6 100%);
-    color: #f1f5f9;
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    font-family: 'Space Grotesk', sans-serif;
-}
-.step-box strong {
-    color: #facc15; /* aksen kuning untuk judul */
-}
-.step-box:hover {
-    transform: scale(1.02); /* efek interaktif saat hover */
-    transition: 0.2s ease-in-out;
-}
-</style>
+    <style>
+    .step-box {
+        background: linear-gradient(135deg, #001f3f 0%, #3b82f6 100%);
+        color: #f1f5f9;
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        font-family: 'Space Grotesk', sans-serif;
+    }
+    .step-box strong {
+        color: #facc15; /* aksen kuning untuk judul */
+    }
+    .step-box:hover {
+        transform: scale(1.02); /* efek interaktif saat hover */
+        transition: 0.2s ease-in-out;
+    }
+    </style>
 """, unsafe_allow_html=True)
-
-# Konten langkah-langkah
-st.markdown("""
-<div class="step-box">
-01 📚 <strong>Pelajari Materi</strong><br>
-Buka Tab <em>Materi</em> untuk membaca teori lengkap kation golongan I–V dan anion beserta ciri-ciri, reagen, dan karakteristiknya.
-</div>
-
-<div class="step-box">
-02 🧪 <strong>Ikuti Prosedur Pengujian</strong><br>
-Di Tab <em>Pengujian</em>, pilih golongan kation dan ikuti tabel prosedur uji sistematis mulai dari uji pendahuluan hingga uji spesifik.
-</div>
-
-<div class="step-box">
-03 🧫 <strong>Lihat Animasi Reaksi Kation</strong><br>
-Tab <em>Reaksi Kation</em> menampilkan animasi tabung reaksi berwarna dan persamaan reaksi kimia untuk setiap kation.
-</div>
-
-<div class="step-box">
-04 ⚗️ <strong>Lihat Animasi Reaksi Anion</strong><br>
-Tab <em>Reaksi Anion</em> menampilkan animasi tabung reaksi dan reaksi kimia untuk identifikasi anion penting.
-</div>
-
-<div class="step-box">
-05 🎯 <strong>Uji Pemahaman</strong><br>
-Kerjakan <em>Kuis</em> untuk menguji pemahamanmu. Ada feedback langsung dan penjelasan jawaban.
-</div>
-
-<div class="step-box">
-06 🔁 <strong>Ulang & Kuasai</strong><br>
-Navigasi bebas antar tab kapan saja. Kuis bisa diulang untuk meningkatkan skor. Selamat belajar!
-</div>
-""", unsafe_allow_html=True)
-
-
 
 /* ── BADGES ── */
 .gol-badge {
