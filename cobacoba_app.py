@@ -819,9 +819,6 @@ elif st.session_state.tab == "📚 Materi":
                   <p class="muted-p"><strong>Uji spesifik:</strong> {uji}</p>
                   <div class="rxn-eq">{rxn}</div></div>""", unsafe_allow_html=True)
 
-import streamlit as st
-import graphviz
-
 # ─── BAGAN ALIR PEMISAHAN KATION ───────────────────────────────
 st.subheader("📊 Bagan Pemisahan Kation")
 
