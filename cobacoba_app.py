@@ -105,7 +105,7 @@ html, body, [data-testid="stApp"] {
 
 import streamlit as st
 
-# CSS untuk kotak langkah (tanpa gradient)
+# """CSS""" untuk kotak langkah (tanpa gradient)
 st.markdown("""
     <style>
     .step-box {
