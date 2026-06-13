@@ -90,7 +90,7 @@ html, body, [data-testid="stApp"] {
   margin-bottom: 1.25rem;
 }
 .card-gradient {
-  background: linear-gradient(135deg, #161b22 0%, rgba(124,58,237,.08) 100%);
+  background: linear-gradient(135deg, #001f3f 0%, rgba(124,58,237,.08) 100%);
   border-color: rgba(124,58,237,.3);
   box-shadow: 0 0 0 1px rgba(124,58,237,.2), 0 8px 32px rgba(124,58,237,.15);
 }
