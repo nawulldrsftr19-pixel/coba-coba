@@ -30,7 +30,7 @@ html, body, [data-testid="stApp"] {
 /* kotak langkah */
 .step-box {
   background: #2e7d32;   /* hijau solid */
-  color: #f1f5f9;
+  color:#000000;
   border-radius: 12px;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
@@ -55,7 +55,7 @@ if mode == "Gelap":
     }
     .step-box {
       background: #1b5e20; /* hijau gelap untuk kotak */
-      color: #f1f5f9;
+      color:#000000;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -76,7 +76,7 @@ st.markdown("""
   --accent4: #10b981;
   --accent5: #ef4444;
   --accent6: #ec4899;
-  --text:    #f1f5f9;
+  --text:    #000000;
   --muted:   #94a3b8;
 }
 
