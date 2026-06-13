@@ -637,34 +637,6 @@ if st.session_state.tab == "🏠 Panduan":
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB: MATERI
 # ══════════════════════════════════════════════════════════════════════════════
-    st.subheader("📊 Bagan Pemisahan Kation")
-    if 'langkah' not in st.session_state: st.session_state.langkah = 0
-    def buat_bagan(step):
-        dot = graphviz.Digraph()
-        dot.attr(rankdir='TB')
-        dot.node('start','Campuran Gol I–V',style='filled',color='lavender')
-        if step>=1:
-            dot.node('hcl','+ HCl encer'); dot.edge('start','hcl')
-            dot.node('gol1','Endapan Gol I',style='filled',color='lightblue')
-            dot.node('larutan','Filtrat (Al,Fe,Ba,Sr,Ca)',style='filled',color='lightblue')
-            dot.edge('hcl','gol1'); dot.edge('hcl','larutan')
-        if step>=2:
-            dot.node('h2o','+ H2O Panas'); dot.edge('gol1','h2o')
-            dot.node('pb','Pb²⁺ Larutan'); dot.node('residu','Endapan AgCl & Hg2Cl2')
-            dot.edge('h2o','pb'); dot.edge('h2o','residu')
-            dot.node('nh4oh','+ NH₄OH Berlebih'); dot.edge('larutan','nh4oh')
-            dot.node('gol3','Endapan (Al, Fe)'); dot.node('gol4','Filtrat (Ba, Sr, Ca)')
-            dot.edge('nh4oh','gol3'); dot.edge('nh4oh','gol4')
-        if step>=3:
-            dot.edge('pb','PbCrO₄ (Kuning)',label='+ K₂CrO₄')
-            dot.edge('gol3','Fe(OH)₃ / Al(OH)₄⁻', label='+ NaOH Berlebih')
-            dot.edge('gol4','BaCrO₄ (Kuning)',label='+ K₂CrO₄')
-        return dot
-    st.graphviz_chart(buat_bagan(st.session_state.langkah))
-    if st.button("➡️ Langkah Berikutnya"):
-        if st.session_state.langkah < 4: st.session_state.langkah += 1; st.rerun()
-    if st.button("🔄 Reset Bagan"): st.session_state.langkah = 0; st.rerun()
-
 elif st.session_state.tab == "📚 Materi":
     st.markdown('<div class="grad-h2">Materi Kation &amp; Anion</div>', unsafe_allow_html=True)
 
@@ -846,6 +818,36 @@ elif st.session_state.tab == "📚 Materi":
                 st.markdown(f"""<div class="card"><span class="gol-badge anion-badge">{title}</span>
                   <p class="muted-p"><strong>Uji spesifik:</strong> {uji}</p>
                   <div class="rxn-eq">{rxn}</div></div>""", unsafe_allow_html=True)
+
+# BAGAN ALIR PEMISAHAN KATION
+ st.subheader("📊 Bagan Pemisahan Kation")
+    if 'langkah' not in st.session_state: st.session_state.langkah = 0
+    def buat_bagan(step):
+        dot = graphviz.Digraph()
+        dot.attr(rankdir='TB')
+        dot.node('start','Campuran Gol I–V',style='filled',color='lavender')
+        if step>=1:
+            dot.node('hcl','+ HCl encer'); dot.edge('start','hcl')
+            dot.node('gol1','Endapan Gol I',style='filled',color='lightblue')
+            dot.node('larutan','Filtrat (Al,Fe,Ba,Sr,Ca)',style='filled',color='lightblue')
+            dot.edge('hcl','gol1'); dot.edge('hcl','larutan')
+        if step>=2:
+            dot.node('h2o','+ H2O Panas'); dot.edge('gol1','h2o')
+            dot.node('pb','Pb²⁺ Larutan'); dot.node('residu','Endapan AgCl & Hg2Cl2')
+            dot.edge('h2o','pb'); dot.edge('h2o','residu')
+            dot.node('nh4oh','+ NH₄OH Berlebih'); dot.edge('larutan','nh4oh')
+            dot.node('gol3','Endapan (Al, Fe)'); dot.node('gol4','Filtrat (Ba, Sr, Ca)')
+            dot.edge('nh4oh','gol3'); dot.edge('nh4oh','gol4')
+        if step>=3:
+            dot.edge('pb','PbCrO₄ (Kuning)',label='+ K₂CrO₄')
+            dot.edge('gol3','Fe(OH)₃ / Al(OH)₄⁻', label='+ NaOH Berlebih')
+            dot.edge('gol4','BaCrO₄ (Kuning)',label='+ K₂CrO₄')
+        return dot
+    st.graphviz_chart(buat_bagan(st.session_state.langkah))
+    if st.button("➡️ Langkah Berikutnya"):
+        if st.session_state.langkah < 4: st.session_state.langkah += 1; st.rerun()
+    if st.button("🔄 Reset Bagan"): st.session_state.langkah = 0; st.rerun()
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB: PENGUJIAN
