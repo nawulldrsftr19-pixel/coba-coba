@@ -38,7 +38,7 @@ html, body, [data-testid="stApp"] {
   transition: background 0.6s ease, color 0.6s ease;
 }
 .step-box strong {
-  color: #000000; /* aksen kuning */
+  color: ##a5d6a7; /* aksen kuning */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -55,7 +55,7 @@ if mode == "Gelap":
     }
     .step-box {
       background: #1b5e20; /* hijau gelap untuk kotak */
-      color:#000000;
+      color:#a5d6a7;
     }
     </style>
     """, unsafe_allow_html=True)
