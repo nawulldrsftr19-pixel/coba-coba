@@ -637,8 +637,7 @@ if st.session_state.tab == "🏠 Panduan":
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB: MATERI
 # ══════════════════════════════════════════════════════════════════════════════
-# --- TAB 1: BAGAN [20-23] ---
-    st.subheader("📊 Bagan Pemisahan Kation (Berdasarkan Bagan Alir)")
+    st.subheader("📊 Bagan Pemisahan Kation")
     if 'langkah' not in st.session_state: st.session_state.langkah = 0
     def buat_bagan(step):
         dot = graphviz.Digraph()
