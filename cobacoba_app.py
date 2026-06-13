@@ -2,7 +2,7 @@ import streamlit as st
 
 # ─── PAGE CONFIG ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Glow ion — Analisis Kation & Anion",
+    page_title="KimIA — Analisis Kation & Anion",
     page_icon="⚗️",
     layout="wide",
 )
@@ -28,8 +28,8 @@ st.markdown("""
 }
 
 html, body, [data-testid="stApp"] {
-  background-color: #ffffff !important;
-  color: #0d1117 !important;
+  background-color: #0d1117 !important;
+  color: #f1f5f9 !important;
   font-family: 'Space Grotesk', sans-serif;
 }
 
@@ -90,10 +90,9 @@ html, body, [data-testid="stApp"] {
   margin-bottom: 1.25rem;
 }
 .card-gradient {
- .card-gradient {
-    background: #001f3f; /* dongker */
-    border-color: rgba(124,58,237,.3);
-    box-shadow: 0 0 0 1px rgba(124,58,237,.2), 0 8px 32px rgba(124,58,237,.15);
+  background: linear-gradient(135deg, #161b22 0%, rgba(124,58,237,.08) 100%);
+  border-color: rgba(124,58,237,.3);
+  box-shadow: 0 0 0 1px rgba(124,58,237,.2), 0 8px 32px rgba(124,58,237,.15);
 }
 .highlight-box {
   background: linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.08));
@@ -543,7 +542,7 @@ if st.session_state.tab == "🏠 Panduan":
     st.markdown("""
     <div class="card card-gradient" style="text-align:center;padding:2rem;">
       <div style="font-size:3rem;margin-bottom:1rem;">⚗️</div>
-      <div class="grad-h2" style="font-size:2rem;">Selamat Datang di Glow ion</div>
+      <div class="grad-h2" style="font-size:2rem;">Selamat Datang di KimIA</div>
       <p class="muted-p" style="max-width:560px;margin:0 auto 1rem;">
         Platform interaktif untuk mempelajari analisis kualitatif
         <strong style="color:#67e8f9">Kation</strong> (Golongan I–V) dan
@@ -1034,4 +1033,3 @@ elif st.session_state.tab == "🎯 Kuis":
                     if st.session_state.quiz_idx >= total:
                         st.session_state.quiz_done = True
                     st.rerun()
-    
