@@ -111,9 +111,9 @@ st.markdown("""
     .step-box {
         background: #001f3f;   /* warna dongker polos */
         color: #f1f5f9;        /* teks terang agar kontras */
-        border-radius: 12px;
-        padding: 1rem 1.25rem;
-        margin-bottom: 1rem;
+         border-radius: 12px;
+         padding: 1rem 1.25rem;
+         margin-bottom: 1rem;
         box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         font-family: 'Space Grotesk', sans-serif;
     }
