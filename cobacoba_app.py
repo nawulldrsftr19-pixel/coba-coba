@@ -107,7 +107,7 @@ html, body, [data-testid="stApp"] {
 st.markdown("""
     <style>
     .step-box {
-        background: linear-gradient(135deg, #001f3f 0%, #3b82f6 100%);
+        background: linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.08));
         color: #f1f5f9;
         border-radius: 12px;
         padding: 1rem 1.25rem;
