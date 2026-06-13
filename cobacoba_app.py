@@ -9,12 +9,11 @@ st.set_page_config(
 
 import streamlit as st
 
-# CSS hijau + transisi halus
+# CSS hijau
 st.markdown("""
 <style>
 :root {
   --bg-dark:  #004d40;   /* hijau tua (mode gelap) */
-  --text-light:  #000000; /* teks gelap */
   --text-dark:  #000000; /* teks terang */
 }
 
@@ -34,7 +33,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-mode == "Gelap":
     st.markdown("""
     <style>
     html, body, [data-testid="stApp"] {
