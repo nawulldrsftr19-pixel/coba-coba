@@ -2,10 +2,63 @@ import streamlit as st
 
 # ─── PAGE CONFIG ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="KimIA — Analisis Kation & Anion",
+    page_title="Glow ion — Analisis Kation & Anion",
     page_icon="⚗️",
     layout="wide",
 )
+
+import streamlit as st
+
+# CSS hijau + transisi halus
+st.markdown("""
+<style>
+:root {
+  --bg-light: #e8f5e9;   /* hijau muda (mode terang) */
+  --bg-dark:  #004d40;   /* hijau tua (mode gelap) */
+  --text-light: #1b1b1b; /* teks gelap */
+  --text-dark:  #f1f5f9; /* teks terang */
+}
+
+/* default: terang */
+html, body, [data-testid="stApp"] {
+  background-color: var(--bg-light) !important;
+  color: var(--text-light) !important;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: background-color 0.6s ease, color 0.6s ease; /* transisi halus */
+}
+
+/* kotak langkah */
+.step-box {
+  background: #2e7d32;   /* hijau solid */
+  color: #f1f5f9;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: background 0.6s ease, color 0.6s ease;
+}
+.step-box strong {
+  color: #ffeb3b; /* aksen kuning */
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Toggle mode gelap/terang
+mode = st.radio("Pilih tema:", ["Terang", "Gelap"], horizontal=True)
+
+if mode == "Gelap":
+    st.markdown("""
+    <style>
+    html, body, [data-testid="stApp"] {
+      background-color: var(--bg-dark) !important;
+      color: var(--text-dark) !important;
+    }
+    .step-box {
+      background: #1b5e20; /* hijau gelap untuk kotak */
+      color: #f1f5f9;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 # ─── CUSTOM CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -542,7 +595,7 @@ if st.session_state.tab == "🏠 Panduan":
     st.markdown("""
     <div class="card card-gradient" style="text-align:center;padding:2rem;">
       <div style="font-size:3rem;margin-bottom:1rem;">⚗️</div>
-      <div class="grad-h2" style="font-size:2rem;">Selamat Datang di KimIA</div>
+      <div class="grad-h2" style="font-size:2rem;">Selamat Datang di Glow ion</div>
       <p class="muted-p" style="max-width:560px;margin:0 auto 1rem;">
         Platform interaktif untuk mempelajari analisis kualitatif
         <strong style="color:#67e8f9">Kation</strong> (Golongan I–V) dan
